@@ -1,5 +1,9 @@
 <h2>Login</h2>
+<?php
 
+require('functions.php');
+logErrors();
+?>
 <form action="./Account/login.php" method="post">
     <Label for="Email">Email</Label>
     <input type="text" name="Email" id="Email">

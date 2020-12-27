@@ -1,0 +1,49 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+}
+
+html {
+    font-size: 16px;
+}
+
+.post {
+    background: rgb(219, 219, 219);
+    height: 50rem;
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    border-radius: 20px;
+    margin: 0px 20px 0px 20px;
+    overflow: hidden;
+}
+
+.date-section {
+    height: 2rem;
+    background: red;
+}
+
+.image-section {
+    height: 30rem;
+    width: 100%;
+    overflow: hidden;
+}
+
+.image-section img {
+    position: relative;
+    border-radius: 20px;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
+.text-section {
+    height: 15rem;
+    background: magenta;
+}
+
+.bottom-section {
+    height: 3rem;
+    background: mediumaquamarine;
+}

@@ -15,8 +15,10 @@ function createMessage(int $type, string $message)
 
 function logMessage()
 {
-    if (end($_SESSION['message'])['type'] !== 3)
-        print_r(end($_SESSION['message'])['message']);
+    if (count($_SESSION['message']) > 0) { //Only try logging if array is not empty
+        if (end($_SESSION['message'])['type'] !== 3) // Does not log 3. 3 means ok
+            print_r(end($_SESSION['message'])['message']); //Print latest message
+    }
 }
 
 function redirect(string $path)

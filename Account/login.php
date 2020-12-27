@@ -16,13 +16,13 @@ $user = $result->fetch(PDO::FETCH_ASSOC);
 if ($user) {
     if (password_verify($password, $user['password_hash'])) {
         $_SESSION['user'] = $user;
-        createMessage(1, 'Password is correct');
-        redirect('/login.php');
+        createMessage(1, 'You are logged in');
+        redirect('/views/login.php');
     } else {
-        createMessage(2, 'Password is not correct');
-        redirect('/login.php');
+        createMessage(2, 'Account exists. Tip: enter a password that is less incorrect');
+        redirect('/views/login.php');
     }
 } else {
     createMessage(2, 'Create an account bro');
-    redirect('/login.php');
+    redirect('/views/login.php');
 }

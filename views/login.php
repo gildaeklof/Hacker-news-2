@@ -1,11 +1,11 @@
 <h2>Login</h2>
 <?php
 
-require('functions.php');
+require '../functions.php';
 logMessage();
 // print_r($_SESSION);
 ?>
-<form action="./Account/login.php" method="post">
+<form action="/Account/login.php" method="post">
     <Label for="Email">Email</Label>
     <input type="text" name="Email" id="Email">
     <Label for="Password">Password</Label>
@@ -16,7 +16,7 @@ logMessage();
 <h2>OR</h2>
 
 <h2>Create account</h2>
-<form action="./Account/create_account.php" method="post">
+<form action="/Account/create_account.php" method="post">
     <Label for="Email">Email</Label>
     <input type="text" name="Email" id="Email">
     <Label for="Password">Password</Label>

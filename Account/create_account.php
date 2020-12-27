@@ -12,8 +12,8 @@ $result = $db->query("SELECT * FROM Users WHERE email = '$email'");
 $data = $result->fetch(PDO::FETCH_ASSOC);
 
 if (isset($data['email'])) { //Email already exists
-    createError('This email is already in use');
-    redirect('../login.php');
+    createMessage(2, 'This email is already in use');
+    redirect('../views/login.php');
 } else {  //Email is available
     //Export new user to database
     echo 'Email is not in use';

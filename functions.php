@@ -2,26 +2,21 @@
 
 declare(strict_types=1);
 session_start();
-if (isset($_SESSION['errors'])) {
+if (isset($_SESSION['message'])) {
 } else {
-    $_SESSION['errors'] = [];
+    $_SESSION['message'] = [];
 }
 
-function createError(string $errorMessage)
+function createMessage(int $type, string $message)
 {
-    array_push($_SESSION['errors'], $errorMessage);
+    $messageArray = ['type' => $type, 'message' => $message];
+    array_push($_SESSION['message'], $messageArray);
 }
 
-function logErrors(bool $allErrors = false)
+function logMessage()
 {
-
-    if ($allErrors) {
-        foreach ($_SESSION['errors'] as $error) {
-            echo $error;
-        }
-    } else {
-        echo end($_SESSION['errors']);
-    }
+    if (end($_SESSION['message'])['type'] !== 3)
+        print_r(end($_SESSION['message'])['message']);
 }
 
 function redirect(string $path)

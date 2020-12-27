@@ -2,7 +2,8 @@
 <?php
 
 require('functions.php');
-logErrors();
+logMessage();
+// print_r($_SESSION);
 ?>
 <form action="./Account/login.php" method="post">
     <Label for="Email">Email</Label>

@@ -9,6 +9,11 @@ $db = new PDO('sqlite:../hacker_news_database.sqlite3');
 //Fetch posts from database
 $result = $db->query("SELECT * FROM Posts");
 $posts = $result->fetchAll(PDO::FETCH_ASSOC);
+
+//Fetch all comments on post
+$result = $db->query("SELECT * FROM Comments WHERE post_id = 1");
+$comments = $result->fetchAll(PDO::FETCH_ASSOC);
+print_r($comments);
 ?>
 
 <body>
@@ -69,6 +74,27 @@ $posts = $result->fetchAll(PDO::FETCH_ASSOC);
                         <button class="delete-button">Delete</button>
                     </div>
                 <?php endif ?>
+            </div>
+        </div>
+
+        <div class="comment">
+            <div class="upper">
+                <div class="left">
+                    <img src="/images/photo-1609050470947-f35aa6071497.jpeg" alt="">
+                    <p class="name">Name</p>
+                </div>
+                <div class="right">
+                    <p class="date">Date</p>
+                </div>
+            </div>
+            <div class="lower">
+                <div class="left">
+                    <p class="comment-paragraph">This is a comment</p>
+                </div>
+                <div class="right">
+                    <button class="edit-button button">Edit</button>
+                    <button class="delete-button button">Delete</button>
+                </div>
             </div>
         </div>
     <?php endforeach ?>

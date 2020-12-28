@@ -14,6 +14,7 @@ body, html {
     width: 100vw;
 }
 
+
 /* * {
     outline: red 1px solid;
 } */
@@ -207,4 +208,75 @@ width: 70%;
     appearance: none;
     padding: .3rem .6rem;
     border: none;
+}
+
+/* Comment */
+.comment {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    border-radius: 1rem;
+    margin: 0rem 1rem 1rem 1rem;
+    flex-grow: 1;
+    margin-bottom: 20rem;
+    overflow: hidden;
+}
+
+.comment .upper {
+    height: 2rem;
+    display: flex;
+    justify-content: space-between;
+    background: rgb(231, 231, 231);
+}
+
+.comment .upper .right {
+    margin-right: 1rem;
+}
+
+.comment .upper .left {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-left: 1rem;
+}
+.comment .upper .left img {
+    height: 1.2rem;
+    width: 1.2rem;
+    border-radius: 50%;
+}
+.comment .upper .left .name {
+    margin-left: 1rem;
+}
+.comment .lower {
+    display: flex;
+    justify-content: space-between;
+    background: rgb(231, 231, 231);
+}
+
+.comment .lower .right  {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 1rem;
+}
+
+.comment .lower .right .edit-button {
+    margin-right: 1rem;
+    background: rgb(0, 132, 255);
+   
+}
+.comment .lower .right .delete-button {
+    background: #F00;
+   
+}
+
+.comment .lower .left {
+    margin-left: 1rem;
+}
+
+.button {
+    border-radius: 5rem;
+    appearance: none;
+    border: none;
+    padding: .3rem .6rem;
 }

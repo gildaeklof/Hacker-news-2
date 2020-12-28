@@ -17,7 +17,7 @@ if ($user) {
     if (password_verify($password, $user['password_hash'])) {
         $_SESSION['user'] = $user;
         createMessage(1, 'You are logged in');
-        redirect('/views/login.php');
+        redirect('/views/index.php');
     } else {
         createMessage(2, 'Account exists. Tip: enter a password that is less incorrect');
         redirect('/views/login.php');

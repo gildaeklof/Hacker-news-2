@@ -9,11 +9,6 @@ $db = new PDO('sqlite:../hacker_news_database.sqlite3');
 //Fetch posts from database
 $result = $db->query("SELECT * FROM Posts");
 $posts = $result->fetchAll(PDO::FETCH_ASSOC);
-
-//Fetch all comments on post
-$result = $db->query("SELECT * FROM Comments WHERE post_id = 1");
-$comments = $result->fetchAll(PDO::FETCH_ASSOC);
-print_r($comments);
 ?>
 
 <body>
@@ -22,9 +17,13 @@ print_r($comments);
     <?php foreach ($posts as $post) : ?>
         <?php
 
-        $userId = $post['user_id'];
+        //Fetch all comments on post
+        $postId = $post['id'];
+        $commentResult = $db->query("SELECT * FROM Comments WHERE post_id = $postId");
+        $comments = $commentResult->fetchAll(PDO::FETCH_ASSOC);
 
-        //Fetch users from database
+        //Fetch user from database
+        $userId = $post['user_id'];
         $result = $db->query("SELECT * FROM Users WHERE id = $userId");
         $user = $result->fetch(PDO::FETCH_ASSOC);
 
@@ -77,26 +76,48 @@ print_r($comments);
             </div>
         </div>
 
-        <div class="comment">
-            <div class="upper">
-                <div class="left">
-                    <img src="/images/photo-1609050470947-f35aa6071497.jpeg" alt="">
-                    <p class="name">Name</p>
+        <?php foreach ($comments as $comment) : ?>
+            <?php
+            $commenter_id = $comment['user_id'];
+            $result = $db->query("SELECT name FROM Users WHERE id = $commenter_id");
+            $data = $result->fetch(PDO::FETCH_ASSOC);
+            $commenter_name = $data['name'];
+
+            //Fetch commenter
+            $commenterId = $comment['user_id'];
+            $result = $db->query("SELECT * FROM Users WHERE id = $commenterId");
+            $commenter = $result->fetch(PDO::FETCH_ASSOC);
+
+            //If user has a name, set it to $userName
+            if (isset($commenter['name'])) {
+                $commenter_name = $commenter['name'];
+            } else {
+                $commenter_name = 'IHaveNoName';
+            }
+            ?>
+            <div class="comment">
+                <div class="upper">
+                    <div class="left">
+                        <img src="/images/photo-1609050470947-f35aa6071497.jpeg" alt="">
+                        <p class="name"><?= $commenter_name ?></p>
+                    </div>
+                    <div class="right">
+                        <p class="date"><?= date('D M Y H:i', $comment['date']) ?></p>
+                    </div>
                 </div>
-                <div class="right">
-                    <p class="date">Date</p>
+                <div class="lower">
+                    <div class="left">
+                        <p class="comment-paragraph"><?= $comment['body'] ?></p>
+                    </div>
+                    <?php if (isset($_SESSION['user']) && $comment['user_id'] === $_SESSION['user']['id']) : ?>
+                        <div class="right">
+                            <button class="edit-button button">Edit</button>
+                            <button class="delete-button button">Delete</button>
+                        </div>
+                    <?php endif ?>
                 </div>
             </div>
-            <div class="lower">
-                <div class="left">
-                    <p class="comment-paragraph">This is a comment</p>
-                </div>
-                <div class="right">
-                    <button class="edit-button button">Edit</button>
-                    <button class="delete-button button">Delete</button>
-                </div>
-            </div>
-        </div>
+        <?php endforeach ?>
     <?php endforeach ?>
     <script src="./script.js"></script>
 </body>

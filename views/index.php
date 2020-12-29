@@ -13,6 +13,7 @@ $posts = $result->fetchAll(PDO::FETCH_ASSOC);
 
 <body>
     <a href="/views/login.php">Login</a>
+    <a href="/views/create_post.php">Create post</a>
 
     <?php foreach ($posts as $post) : ?>
         <?php

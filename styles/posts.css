@@ -12,6 +12,9 @@ body, html {
     margin: 0;
     padding: 0;
     width: 100vw;
+    /* background by SVGBackgrounds.com */
+    background: url(/images/Scattered-Forcefields.svg);
+    background-attachment: fixed;
 }
 
 
@@ -19,13 +22,18 @@ body, html {
     outline: red 1px solid;
 } */
 
-html {
+:root {
     font-size: 16px;
     font-family: Raleway;
+    /* Variables */
+    --backdrop-blur: 3px;
+    --post-background-color: rgba(255, 255, 255, 0.747);
+    --box-shadow: 0px 0px 43px -12px rgba(184, 184, 184, 0.75);
 }
 
 .post {
-    background: #E4F2FF;
+    background: var(--post-background-color);
+    backdrop-filter: blur(var(--backdrop-blur));
     height: 30rem;
     max-width: 100%;
     display: flex;
@@ -35,6 +43,7 @@ html {
     overflow: hidden;
     margin-bottom: 1rem;
     margin-top: 1rem;
+    box-shadow: var(--box-shadow);
     
 }
 
@@ -250,13 +259,16 @@ width: 70%;
     flex-grow: 1;
     margin-bottom: 1rem;
     overflow: hidden;
+    background: var(--post-background-color);
+    backdrop-filter: blur(var(--backdrop-blur));
+    box-shadow: var(--box-shadow);
 }
 
 .comment .upper {
     height: 2rem;
     display: flex;
     justify-content: space-between;
-    background: rgb(231, 231, 231);
+
 }
 
 .comment .upper .right {
@@ -280,7 +292,7 @@ width: 70%;
 .comment .lower {
     display: flex;
     justify-content: space-between;
-    background: rgb(231, 231, 231);
+
 }
 
 .comment .lower .right  {

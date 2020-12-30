@@ -7,7 +7,7 @@ logMessage();
 $db = new PDO('sqlite:../hacker_news_database.sqlite3');
 
 //Fetch posts from database
-$result = $db->query("SELECT * FROM Posts");
+$result = $db->query("SELECT * FROM Posts ORDER BY \"date\" DESC");
 $posts = $result->fetchAll(PDO::FETCH_ASSOC);
 ?>
 

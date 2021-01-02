@@ -23,3 +23,5 @@ logMessage();
     <input type="text" name="Password" id="Password">
     <input type="submit" value="Submit">
 </form>
+
+<?php createMessage(3) ?>

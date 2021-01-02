@@ -46,3 +46,5 @@ $db = new PDO('sqlite:../hacker_news_database.sqlite3');
     </div>
     <input type="submit" value="Post">
 </form>
+
+<?php createMessage(3) ?>

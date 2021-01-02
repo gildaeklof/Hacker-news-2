@@ -138,5 +138,6 @@ $posts = $result->fetchAll(PDO::FETCH_ASSOC);
     <?php endforeach ?>
     <script src="/script.js"></script>
 </body>
+<?php createMessage(3) ?>
 
 <?php require('footer.php') ?>

@@ -7,7 +7,7 @@ if (isset($_SESSION['message'])) {
     $_SESSION['message'] = [];
 }
 
-function createMessage(int $type, string $message)
+function createMessage(int $type, string $message = 'ok')
 {
     $messageArray = ['type' => $type, 'message' => $message];
     array_push($_SESSION['message'], $messageArray);

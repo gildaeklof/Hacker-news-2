@@ -3,8 +3,6 @@ require('header.php');
 require('../functions.php');
 logMessage();
 
-$_SESSION['user']['name'];
-
 if (isset($_SESSION['user']['name'])) {
     $userName = $_SESSION['user']['name'];
 } else {

@@ -17,11 +17,21 @@ $posts = $result->fetchAll(PDO::FETCH_ASSOC);
 
     <?php foreach ($posts as $post) : ?>
         <?php
+        $postId = $post['id'];
 
         //Fetch all comments on post
-        $postId = $post['id'];
         $commentResult = $db->query("SELECT * FROM Comments WHERE post_id = $postId");
         $comments = $commentResult->fetchAll(PDO::FETCH_ASSOC);
+
+        //Fetch likes on post
+        $likesResult = $db->query("SELECT COUNT(user_id) AS 'likes' FROM Likes WHERE post_id = $postId AND up_down = 1");
+        $likes = $likesResult->fetch(PDO::FETCH_ASSOC)['likes'];
+
+        //Fetch dislikes
+        $dislikeResult = $db->query("SELECT COUNT(user_id) AS 'dislikes' FROM Likes WHERE post_id = $postId AND up_down = 0");
+        $dislikes = $dislikeResult->fetch(PDO::FETCH_ASSOC)['dislikes'];
+
+        $LikesSum = $likes - $dislikes;
 
         //Fetch user from database
         $userId = $post['user_id'];
@@ -36,7 +46,7 @@ $posts = $result->fetchAll(PDO::FETCH_ASSOC);
         }
 
         ?>
-        <div class="post">
+        <div class="post id<?= $postId ?>">
             <div class="date-section">
                 <div class="left">
                     <img src="/images/photo-1609050470947-f35aa6071497.jpeg" alt="">
@@ -54,11 +64,11 @@ $posts = $result->fetchAll(PDO::FETCH_ASSOC);
                     <h2><?= $post['header'] ?></h2>
                     <p><?= $post['body'] ?></p>
                 </div>
-                <div class="text-section-vote">
+                <div class="text-section-vote" data-post="<?= $post['id'] ?>">
                     <div class="img-container">
                         <img class="upvote" src="/assets/up-arrow.svg" alt="">
                     </div>
-                    <p>42</p>
+                    <p><?= $LikesSum ?></p>
                     <div class="img-container">
                         <img class="downvote" src="/assets/down-arrow.svg" alt="">
                     </div>
@@ -120,7 +130,7 @@ $posts = $result->fetchAll(PDO::FETCH_ASSOC);
             </div>
         <?php endforeach ?>
     <?php endforeach ?>
-    <script src="./script.js"></script>
+    <script src="/script.js"></script>
 </body>
 
 <?php require('footer.php') ?>

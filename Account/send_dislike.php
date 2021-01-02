@@ -5,6 +5,7 @@ require('../functions.php');
 
 $postId = json_decode(file_get_contents('php://input'))->post_id;
 $response = new stdClass();
+
 //Connect to db 
 $db = new PDO('sqlite:../hacker_news_database.sqlite3');
 
@@ -29,59 +30,59 @@ if (!isset($_SESSION['user'])) {
 
 $user_id = $_SESSION['user']['id'];
 
-//Check previous likes
+//Check previous downvoted
 $getLikes = $db->query("SELECT * from Likes WHERE user_id = $user_id AND post_id = $postId");
 $getLikes_result = $getLikes->fetch(PDO::FETCH_ASSOC);
 
-if (isset($getLikes_result['id']) && $getLikes_result['up_down'] === '1') {
-    //Send like to db 
+if (isset($getLikes_result['id']) && $getLikes_result['up_down'] === '0') {  //Already downvoted post
+    //Remove downvote from db 
     $db->query("DELETE FROM Likes WHERE user_id = $user_id AND post_id = $postId;");
-
-    //Send response to frontned
-    $response->post_likes = $LikesSum;
-    $response->addedlikeCount = -1;
-    $response->message = 'You have unliked this post';
-    $JSON_response = json_encode($response);
-    echo $JSON_response;
-    die();
-    //Already liked post
-} else if (!isset($getLikes_result['id'])) {
-    //Send like to db 
-    $like = 1;
-    $stmt = $db->prepare("INSERT INTO Likes (user_id, post_id, up_down) VALUES (:user_id, :post_id, :up_down)");
-    $stmt->bindParam(':user_id', $user_id);
-    $stmt->bindParam(':post_id', $postId);
-    $stmt->bindParam(':up_down', $like);
-    $stmt->execute();
 
     //Send response to frontned
     $response->post_likes = $LikesSum;
     $response->addedlikeCount = 1;
-    $response->message = 'You liked the post';
+    $response->message = 'You have un-downvoted this post';
     $JSON_response = json_encode($response);
     echo $JSON_response;
     die();
-    //No like or dislike on post
-}
-if (isset($getLikes_result['id']) && $getLikes_result['up_down'] === '0') {
-    //remove previous dislike
-    $db->query("DELETE FROM Likes WHERE user_id = $user_id AND post_id = $postId;");
+} else if (!isset($getLikes_result['id'])) {  //No like or dislike on post
 
-    //Send like to db 
-    $like = 1;
+
+    //Send downvote to db 
+    $like = 0;
     $stmt = $db->prepare("INSERT INTO Likes (user_id, post_id, up_down) VALUES (:user_id, :post_id, :up_down)");
     $stmt->bindParam(':user_id', $user_id);
     $stmt->bindParam(':post_id', $postId);
     $stmt->bindParam(':up_down', $like);
     $stmt->execute();
 
+    //Send response to frontned
     $response->post_likes = $LikesSum;
-    $response->addedlikeCount = 2;
-    $response->message = 'You liked the post and the unlike is removed';
+    $response->addedlikeCount = -1;
+    $response->message = 'You disliked the post';
     $JSON_response = json_encode($response);
     echo $JSON_response;
     die();
-    //Post previously disliked
+}
+if (isset($getLikes_result['id']) && $getLikes_result['up_down'] === '1') { //Post previously liked
+    //remove previous like
+    $db->query("DELETE FROM Likes WHERE user_id = $user_id AND post_id = $postId;");
+
+    //Send dislike to db 
+    $like = 0;
+    $stmt = $db->prepare("INSERT INTO Likes (user_id, post_id, up_down) VALUES (:user_id, :post_id, :up_down)");
+    $stmt->bindParam(':user_id', $user_id);
+    $stmt->bindParam(':post_id', $postId);
+    $stmt->bindParam(':up_down', $like);
+    $stmt->execute();
+
+    //Send response to frontend
+    $response->post_likes = $LikesSum;
+    $response->addedlikeCount = -2;
+    $response->message = 'You unliked the post and the like is removed';
+    $JSON_response = json_encode($response);
+    echo $JSON_response;
+    die();
 }
 
 $response->likes = 0;

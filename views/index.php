@@ -13,7 +13,13 @@ $posts = $result->fetchAll(PDO::FETCH_ASSOC);
 
 <body>
     <a href="/views/login.php">Login</a>
+    <?php
+    if (isset($_SESSION['user'])) : ?>
+        <a href="/account/logout.php">Logout</a>
+    <?php endif ?>
+
     <a href="/views/create_post.php">Create post</a>
+    <a href="/views/account.php">Account</a>
 
     <?php foreach ($posts as $post) : ?>
         <?php

@@ -33,9 +33,9 @@ if (!$_SESSION['user']) {
             <input type="text" name="email" id="email">
             <label for="name">Name</label>
             <input type="text" name="name" id="name">
-            <label for="email">Password</label>
+            <label for="password">Password</label>
             <input type="text" name="password" id="password">
-            <label for="email">Bio</label>
+            <label for="bio">Bio</label>
             <input type="text" name="bio" id="bio">
             <input type="submit" value="Save">
         </form>

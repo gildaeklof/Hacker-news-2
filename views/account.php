@@ -1,6 +1,7 @@
 <?php
 
 require('header.php');
+require('./nav.php');
 require('../functions.php');
 $userId = $_SESSION['user']['id'];
 logMessage();
@@ -41,7 +42,7 @@ if (!$_SESSION['user']) {
             <input type="submit" value="Save">
         </form>
     </section>
-
+    <script src="../script/hamburger.js"></script>
 </body>
 
 

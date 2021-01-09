@@ -22,14 +22,10 @@ if (isset($_SESSION['sort'])) {
 
 
 <body>
-    <a href="/views/login.php">Login</a>
-    <?php
-    if (isset($_SESSION['user'])) : ?>
-        <a href="/Account/logout.php">Logout</a>
-    <?php endif ?>
+    <?php require('./nav.php') ?>
 
-    <a href="/views/create_post.php">Create post</a>
-    <a href="/views/account.php">Account</a>
+    <!-- <a href="/views/create_post.php">Create post</a>
+    <a href="/views/account.php">Account</a> -->
 
     <!-- Sort -->
     <!-- <select class="sort-by" name="sort" id="">
@@ -153,6 +149,7 @@ if (isset($_SESSION['sort'])) {
         <?php endforeach ?>
     <?php endforeach ?>
     <script src="/script/like.js"></script>
+    <script src="/script/hamburger.js"></script>
     <!-- <script src="/script/sort.js"></script> -->
 </body>
 <?php createMessage(3) ?>

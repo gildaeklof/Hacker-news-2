@@ -1,5 +1,6 @@
 <?php
 require('header.php');
+require('./nav.php');
 require('../functions.php');
 logMessage();
 
@@ -46,5 +47,6 @@ $db = new PDO('sqlite:../hacker_news_database.sqlite3');
     </div>
     <input type="submit" value="Post">
 </form>
+<script src="../script/hamburger.js"></script>
 
 <?php createMessage(3) ?>

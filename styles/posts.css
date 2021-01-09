@@ -8,14 +8,7 @@
     font-weight: bold;
 } 
 
-body, html {
-    margin: 0;
-    padding: 0;
-    width: 100vw;
-    /* background by SVGBackgrounds.com */
-    background: url(/images/Scattered-Forcefields.svg);
-    background-attachment: fixed;
-}
+
 
 
 /* * {

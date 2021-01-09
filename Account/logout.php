@@ -1,5 +1,5 @@
 <?php
-session_destroy();
 require('../functions.php');
-logMessage('You have been logged out');
+session_destroy();
+createMessage(1, 'You have been logged out');
 redirect('/views/index.php');

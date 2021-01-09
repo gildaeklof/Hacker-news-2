@@ -2,6 +2,7 @@
 
 require('header.php');
 require('../functions.php');
+$userId = $_SESSION['user']['id'];
 
 //Database connection
 $db = new PDO('sqlite:../hacker_news_database.sqlite3');
@@ -9,7 +10,7 @@ $db = new PDO('sqlite:../hacker_news_database.sqlite3');
 if (!$_SESSION['user']) {
     redirect('/views/login.php');
 } else {
-    $result = $db->query("SELECT * FROM USERS WHERE id = 11");
+    $result = $db->query("SELECT * FROM USERS WHERE id = $userId");
     $userData = $result->fetch(PDO::FETCH_ASSOC);
     $_SESSION['user'] = $userData;
 }

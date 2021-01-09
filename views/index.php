@@ -11,6 +11,7 @@ $result = $db->query("SELECT * FROM Posts ORDER BY \"date\" DESC");
 $posts = $result->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
+
 <body>
     <a href="/views/login.php">Login</a>
     <?php

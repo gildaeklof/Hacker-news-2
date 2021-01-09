@@ -31,20 +31,33 @@ $user_id = $_SESSION['user']['id'];
 //db connection
 $db = new PDO('sqlite:../hacker_news_database.sqlite3');
 
-//Add avatar path to db
-$stmt = $db->prepare("UPDATE Users SET avatar_path = :file_destination WHERE id = :user_id");
-$stmt->bindParam(':file_destination', $file_relative_path);
-$stmt->bindParam(':user_id', $user_id);
-$stmt->execute();
+if (isset($name)) {
+    echo 'name is set';
+}
+if (isset($email)) {
+    echo 'email is set';
+}
+if (isset($password_hash)) {
+    echo 'password is set';
+}
+if (isset($bio)) {
+    echo 'bio is set';
+}
 
-//Add other to db
-$stmt = $db->prepare("UPDATE Users SET name = :name, email = :email, password_hash = :password_hash, bio = :bio WHERE id = :user_id;");
-$stmt->bindParam(':name', $name);
-$stmt->bindParam(':email', $email);
-$stmt->bindParam(':password_hash', $password_hash);
-$stmt->bindParam(':bio', $bio);
-$stmt->bindParam(':user_id', $user_id);
-$stmt->execute();
+// //Add avatar path to db
+// $stmt = $db->prepare("UPDATE Users SET avatar_path = :file_destination WHERE id = :user_id");
+// $stmt->bindParam(':file_destination', $file_relative_path);
+// $stmt->bindParam(':user_id', $user_id);
+// $stmt->execute();
 
-createMessage(1, 'Kontot har ändrats');
-redirect('/views/index.php');
+// //Add other to db
+// $stmt = $db->prepare("UPDATE Users SET name = :name, email = :email, password_hash = :password_hash, bio = :bio WHERE id = :user_id");
+// $stmt->bindParam(':name', $name);
+// $stmt->bindParam(':email', $email);
+// $stmt->bindParam(':password_hash', $password_hash);
+// $stmt->bindParam(':bio', $bio);
+// $stmt->bindParam(':user_id', $user_id);
+// $stmt->execute();
+
+// createMessage(1, 'Kontot har ändrats');
+// redirect('/views/index.php');

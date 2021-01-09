@@ -15,9 +15,18 @@ function createMessage(int $type, string $message = 'ok')
 
 function logMessage()
 {
+    $errorArray = [];
     if (count($_SESSION['message']) > 0) { //Only try logging if array is not empty
-        if (end($_SESSION['message'])['type'] !== 3) // Does not log 3. 3 means ok
-            print_r(end($_SESSION['message'])['message']); //Print latest message
+        foreach (($_SESSION['message']) as $message) {
+            if ($message['type'] !== 3) {
+                $errorArray[] = $message['message'];
+            } else {
+                $errorArray = [];
+            }
+        }
+        if (count($errorArray) > 0) {
+            print_r($errorArray);
+        }
     }
 }
 

@@ -35,7 +35,12 @@ if (isset($_FILES['file'])) {
     $file_destination = __DIR__ . '/uploads/' . $file_name_new;
     $file_relative_path = '/Account/uploads/' . $file_name_new;
 
-    move_uploaded_file($file_tmp, $file_destination);
+    if ($file_size < 100000) {
+        move_uploaded_file($file_tmp, $file_destination);
+    } else {
+        createMessage(2, 'Image is too large :C make smol');
+    }
+
 
     //Add avatar path to db
     $stmt = $db->prepare("UPDATE Users SET avatar_path = :file_destination WHERE id = :user_id");
@@ -50,33 +55,30 @@ if ($name !== '') {
     $stmt->bindParam(':name', $name);
     $stmt->bindParam(':user_id', $user_id);
     $stmt->execute();
+    createMessage(1, 'Namn har uppdaterats');
 }
 if ($email !== '') {
     $stmt = $db->prepare("UPDATE Users SET email = :email WHERE id = :user_id");
     $stmt->bindParam(':email', $email);
     $stmt->bindParam(':user_id', $user_id);
     $stmt->execute();
+    createMessage(1, 'Email har uppdaterats');
 }
 if ($password !== '') {
     $stmt = $db->prepare("UPDATE Users SET password_hash = :password_hash WHERE id = :user_id");
     $stmt->bindParam(':password_hash', $password_hash);
     $stmt->bindParam(':user_id', $user_id);
     $stmt->execute();
+    createMessage(1, 'Password har uppdaterats');
 }
 if ($bio !== '') {
     $stmt = $db->prepare("UPDATE Users SET bio = :bio WHERE id = :user_id");
     $stmt->bindParam(':bio', $bio);
     $stmt->bindParam(':user_id', $user_id);
     $stmt->execute();
+    createMessage(1, 'Bio har uppdaterats');
 }
 
-$stmt = $db->prepare("UPDATE Users SET name = :name, email = :email, password_hash = :password_hash, bio = :bio WHERE id = :user_id");
-$stmt->bindParam(':name', $name);
-$stmt->bindParam(':email', $email);
-$stmt->bindParam(':password_hash', $password_hash);
-$stmt->bindParam(':bio', $bio);
-$stmt->bindParam(':user_id', $user_id);
 
 
-createMessage(1, 'Kontot har ändrats');
-redirect('/views/index.php');
+redirect('/views/account.php');

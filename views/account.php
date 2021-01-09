@@ -3,6 +3,7 @@
 require('header.php');
 require('../functions.php');
 $userId = $_SESSION['user']['id'];
+logMessage();
 
 //Database connection
 $db = new PDO('sqlite:../hacker_news_database.sqlite3');
@@ -30,13 +31,13 @@ if (!$_SESSION['user']) {
             <label for="file">Image</label>
             <input type="file" name="file" id="file">
             <label for="email">Email</label>
-            <input type="text" name="email" id="email">
+            <input placeholder="<?php echo $_SESSION['user']['email'] ?>" type="text" name="email" id="email">
             <label for="name">Name</label>
-            <input type="text" name="name" id="name">
+            <input placeholder="<?php echo $_SESSION['user']['name'] ?>" type="text" name="name" id="name">
             <label for="password">Password</label>
-            <input type="text" name="password" id="password">
+            <input placeholder="***********" type="text" name="password" id="password">
             <label for="bio">Bio</label>
-            <input type="text" name="bio" id="bio">
+            <input placeholder="<?php echo $_SESSION['user']['bio'] ?>" type="text" name="bio" id="bio">
             <input type="submit" value="Save">
         </form>
     </section>
@@ -44,5 +45,5 @@ if (!$_SESSION['user']) {
 </body>
 
 
-
+<?php createMessage(3) ?>
 <?php require('footer.php') ?>

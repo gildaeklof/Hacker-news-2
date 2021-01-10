@@ -9,4 +9,5 @@ sortBy.addEventListener('change', (e) => {
         .then(response => response.text())
         .then(data => console.log(data))
     //Todo: reload page
+    location.reload();
 })

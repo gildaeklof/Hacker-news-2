@@ -3,8 +3,8 @@ require('header.php');
 require('../functions.php');
 logMessage();
 
-//Database connection
-$db = new PDO('sqlite:../hacker_news_database.sqlite3');
+//SELECT id, user_id, header, body, date, ifnull((select sum(up_down) from likes where posts.id=likes.post_id), 0) AS antallikes FROM Posts ORDER BY antallikes DESC
+
 
 //Sort by likes or new
 // if (isset($_SESSION['user'])) {
@@ -13,25 +13,47 @@ $db = new PDO('sqlite:../hacker_news_database.sqlite3');
 // }
 
 //Fetch posts from database
-$result = $db->query("SELECT * FROM Posts ORDER BY \"date\" DESC");
-$posts = $result->fetchAll(PDO::FETCH_ASSOC);
-if (isset($_SESSION['sort'])) {
-    echo $_SESSION['sort'];
-}
-?>
+//Connect to db
+$db = new PDO('sqlite:../hacker_news_database.sqlite3');
 
+
+if (isset($_SESSION['user'])) {
+    $userId = $_SESSION['user']['id'];
+    $stmt = $db->prepare("SELECT sort_by FROM Users where id = :userId");
+    $stmt->bindParam(':userId', $userId);
+    $stmt->execute();
+    $data = $stmt->fetch(PDO::FETCH_ASSOC);
+    $sort_by = $data['sort_by'];
+} else {
+    if (isset($_SESSION['sort'])) {
+        $sort_by = $_SESSION['sort'];
+    } else {
+        $sort_by = 'new';
+    }
+}
+
+$result;
+if ($sort_by === 'new') {
+    $result = $db->query("SELECT * FROM Posts ORDER BY \"date\" DESC");
+} else if ($sort_by === 'mostupvoted') {
+    $result = $db->query("SELECT id, user_id, header, body, date, ifnull((select sum(up_down) from likes where posts.id=likes.post_id), 0) AS antallikes FROM Posts ORDER BY antallikes DESC");
+}
+
+$posts = $result->fetchAll(PDO::FETCH_ASSOC);
+
+?>
 
 <body>
     <?php require('./nav.php') ?>
 
-    <!-- <a href="/views/create_post.php">Create post</a>
-    <a href="/views/account.php">Account</a> -->
-
-    <!-- Sort -->
-    <!-- <select class="sort-by" name="sort" id="">
-        <option value="new">New</option>
-        <option value="mostupvoted">Most upvoted</option>
-    </select> -->
+    <select class="sort-by" name="sort" id="">
+        <option <?php if ($sort_by === 'new') {
+                    echo 'selected';
+                } ?>value="new">New</option>
+        <option <?php if ($sort_by === 'mostupvoted') {
+                    echo 'selected';
+                } ?> value="mostupvoted">Most upvoted</option>
+    </select>
 
     <?php foreach ($posts as $post) : ?>
         <?php
@@ -64,7 +86,13 @@ if (isset($_SESSION['sort'])) {
         }
 
         ?>
-        <div class="post id<?= $postId ?>">
+
+
+
+
+
+
+        <div data-postId="<?= $postId ?>" class="post id<?= $postId ?>">
             <div class="date-section">
                 <div class="left">
                     <img src="/images/photo-1609050470947-f35aa6071497.jpeg" alt="">
@@ -111,6 +139,7 @@ if (isset($_SESSION['sort'])) {
             $result = $db->query("SELECT name FROM Users WHERE id = $commenter_id");
             $data = $result->fetch(PDO::FETCH_ASSOC);
             $commenter_name = $data['name'];
+            $commentId = $comment['id'];
 
             //Fetch commenter
             $commenterId = $comment['user_id'];
@@ -124,7 +153,7 @@ if (isset($_SESSION['sort'])) {
                 $commenter_name = 'IHaveNoName';
             }
             ?>
-            <div class="comment">
+            <div data-id="<?= $commentId ?>" class="comment">
                 <div class="upper">
                     <div class="left">
                         <img src="/images/photo-1609050470947-f35aa6071497.jpeg" alt="">
@@ -149,8 +178,9 @@ if (isset($_SESSION['sort'])) {
         <?php endforeach ?>
     <?php endforeach ?>
     <script src="/script/like.js"></script>
+    <script src="/script/comment.js"></script>
+    <script src="/script/sort.js"></script>
     <script src="/script/hamburger.js"></script>
-    <!-- <script src="/script/sort.js"></script> -->
 </body>
 <?php createMessage(3) ?>
 

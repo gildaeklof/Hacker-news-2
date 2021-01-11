@@ -3,6 +3,7 @@ require('header.php');
 require('../functions.php');
 logMessage();
 
+
 //SELECT id, user_id, header, body, date, ifnull((select sum(up_down) from likes where posts.id=likes.post_id), 0) AS antallikes FROM Posts ORDER BY antallikes DESC
 
 
@@ -41,6 +42,8 @@ if ($sort_by === 'new') {
 
 $posts = $result->fetchAll(PDO::FETCH_ASSOC);
 
+
+
 ?>
 
 <body>
@@ -68,7 +71,7 @@ $posts = $result->fetchAll(PDO::FETCH_ASSOC);
         $likes = $likesResult->fetch(PDO::FETCH_ASSOC)['likes'];
 
         //Fetch dislikes
-        $dislikeResult = $db->query("SELECT COUNT(user_id) AS 'dislikes' FROM Likes WHERE post_id = $postId AND up_down = 0");
+        $dislikeResult = $db->query("SELECT COUNT(user_id) AS 'dislikes' FROM Likes WHERE post_id = $postId AND up_down = -1");
         $dislikes = $dislikeResult->fetch(PDO::FETCH_ASSOC)['dislikes'];
 
         $LikesSum = $likes - $dislikes;
@@ -153,7 +156,7 @@ $posts = $result->fetchAll(PDO::FETCH_ASSOC);
                 $commenter_name = 'IHaveNoName';
             }
             ?>
-            <div data-id="<?= $commentId ?>" class="comment">
+            <div data-postId="<?= $postId ?>" data-id="<?= $commentId ?>" class="comment post<?= $postId ?> comment-id<?= $commentId ?>">
                 <div class="upper">
                     <div class="left">
                         <img src="/images/photo-1609050470947-f35aa6071497.jpeg" alt="">
@@ -178,6 +181,8 @@ $posts = $result->fetchAll(PDO::FETCH_ASSOC);
         <?php endforeach ?>
     <?php endforeach ?>
     <script src="/script/like.js"></script>
+    <script src="/script/edit-comment.js"></script>
+    <script src="/script/scroll.js"></script>
     <script src="/script/comment.js"></script>
     <script src="/script/sort.js"></script>
     <script src="/script/hamburger.js"></script>

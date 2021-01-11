@@ -34,13 +34,24 @@ $user_id = $_SESSION['user']['id'];
 $getLikes = $db->query("SELECT * from Likes WHERE user_id = $user_id AND post_id = $postId");
 $getLikes_result = $getLikes->fetch(PDO::FETCH_ASSOC);
 
-if (isset($getLikes_result['id']) && $getLikes_result['up_down'] === '0') {  //Already downvoted post
+if (isset($getLikes_result['id']) && $getLikes_result['up_down'] === '-1') {  //Already downvoted post
     //Remove downvote from db 
     $db->query("DELETE FROM Likes WHERE user_id = $user_id AND post_id = $postId;");
 
     //Send response to frontned
+    //Fetch likes on post
+    $likesResult = $db->query("SELECT COUNT(user_id) AS 'likes' FROM Likes WHERE post_id = $postId AND up_down = 1");
+    $likes = $likesResult->fetch(PDO::FETCH_ASSOC)['likes'];
+
+    //Fetch dislikes
+    $dislikeResult = $db->query("SELECT COUNT(user_id) AS 'dislikes' FROM Likes WHERE post_id = $postId AND up_down = -1");
+    $dislikes = $dislikeResult->fetch(PDO::FETCH_ASSOC)['dislikes'];
+
+    $LikesSum = $likes - $dislikes;
+
     $response->post_likes = $LikesSum;
     $response->addedlikeCount = 1;
+    $response->likes = $LikesSum;
     $response->message = 'You have un-downvoted this post';
     $JSON_response = json_encode($response);
     echo $JSON_response;
@@ -49,7 +60,7 @@ if (isset($getLikes_result['id']) && $getLikes_result['up_down'] === '0') {  //A
 
 
     //Send downvote to db 
-    $like = 0;
+    $like = -1;
     $stmt = $db->prepare("INSERT INTO Likes (user_id, post_id, up_down) VALUES (:user_id, :post_id, :up_down)");
     $stmt->bindParam(':user_id', $user_id);
     $stmt->bindParam(':post_id', $postId);
@@ -57,8 +68,19 @@ if (isset($getLikes_result['id']) && $getLikes_result['up_down'] === '0') {  //A
     $stmt->execute();
 
     //Send response to frontned
+    //Fetch likes on post
+    $likesResult = $db->query("SELECT COUNT(user_id) AS 'likes' FROM Likes WHERE post_id = $postId AND up_down = 1");
+    $likes = $likesResult->fetch(PDO::FETCH_ASSOC)['likes'];
+
+    //Fetch dislikes
+    $dislikeResult = $db->query("SELECT COUNT(user_id) AS 'dislikes' FROM Likes WHERE post_id = $postId AND up_down = -1");
+    $dislikes = $dislikeResult->fetch(PDO::FETCH_ASSOC)['dislikes'];
+
+    $LikesSum = $likes - $dislikes;
+
     $response->post_likes = $LikesSum;
     $response->addedlikeCount = -1;
+    $response->likes = $LikesSum;
     $response->message = 'You disliked the post';
     $JSON_response = json_encode($response);
     echo $JSON_response;
@@ -69,7 +91,7 @@ if (isset($getLikes_result['id']) && $getLikes_result['up_down'] === '1') { //Po
     $db->query("DELETE FROM Likes WHERE user_id = $user_id AND post_id = $postId;");
 
     //Send dislike to db 
-    $like = 0;
+    $like = -1;
     $stmt = $db->prepare("INSERT INTO Likes (user_id, post_id, up_down) VALUES (:user_id, :post_id, :up_down)");
     $stmt->bindParam(':user_id', $user_id);
     $stmt->bindParam(':post_id', $postId);
@@ -77,8 +99,19 @@ if (isset($getLikes_result['id']) && $getLikes_result['up_down'] === '1') { //Po
     $stmt->execute();
 
     //Send response to frontend
+    //Fetch likes on post
+    $likesResult = $db->query("SELECT COUNT(user_id) AS 'likes' FROM Likes WHERE post_id = $postId AND up_down = 1");
+    $likes = $likesResult->fetch(PDO::FETCH_ASSOC)['likes'];
+
+    //Fetch dislikes
+    $dislikeResult = $db->query("SELECT COUNT(user_id) AS 'dislikes' FROM Likes WHERE post_id = $postId AND up_down = -1");
+    $dislikes = $dislikeResult->fetch(PDO::FETCH_ASSOC)['dislikes'];
+
+    $LikesSum = $likes - $dislikes;
+
     $response->post_likes = $LikesSum;
     $response->addedlikeCount = -2;
+    $response->likes = $LikesSum;
     $response->message = 'You unliked the post and the like is removed';
     $JSON_response = json_encode($response);
     echo $JSON_response;

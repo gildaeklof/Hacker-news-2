@@ -15,7 +15,7 @@ const sendLike = (post_id) => {
         console.log(data)
         likeIndicator = document.querySelector(`.post.id${post_id} .text-section .text-section-vote p`)
 
-        likeIndicator.innerText = data.post_likes + data.addedlikeCount;
+        likeIndicator.innerText = data.likes;
         //if data === true 
         //increase like count
     })
@@ -48,7 +48,7 @@ const sendDislike = (post_id) => {
         console.log(data)
         likeIndicator = document.querySelector(`.post.id${post_id} .text-section .text-section-vote p`)
 
-        likeIndicator.innerText = data.post_likes + data.addedlikeCount;
+        likeIndicator.innerText = data.likes;
         //if data === true 
         //increase like count
     })
@@ -59,5 +59,3 @@ const sendDislike = (post_id) => {
 document.querySelectorAll('.downvote').forEach((upvote) => {
     upvote.addEventListener('click', (e) => { sendDislike(e.currentTarget.parentElement.parentElement.dataset.post) })
 })
-
-// 

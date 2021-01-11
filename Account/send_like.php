@@ -12,7 +12,7 @@ $likesResult = $db->query("SELECT COUNT(user_id) AS 'likes' FROM Likes WHERE pos
 $likes = $likesResult->fetch(PDO::FETCH_ASSOC)['likes'];
 
 //Fetch dislikes
-$dislikeResult = $db->query("SELECT COUNT(user_id) AS 'dislikes' FROM Likes WHERE post_id = $postId AND up_down = 0");
+$dislikeResult = $db->query("SELECT COUNT(user_id) AS 'dislikes' FROM Likes WHERE post_id = $postId AND up_down = -1");
 $dislikes = $dislikeResult->fetch(PDO::FETCH_ASSOC)['dislikes'];
 
 $LikesSum = $likes - $dislikes;
@@ -38,6 +38,17 @@ if (isset($getLikes_result['id']) && $getLikes_result['up_down'] === '1') {
     $db->query("DELETE FROM Likes WHERE user_id = $user_id AND post_id = $postId;");
 
     //Send response to frontned
+    //Fetch likes on post
+    $likesResult = $db->query("SELECT COUNT(user_id) AS 'likes' FROM Likes WHERE post_id = $postId AND up_down = 1");
+    $likes = $likesResult->fetch(PDO::FETCH_ASSOC)['likes'];
+
+    //Fetch dislikes
+    $dislikeResult = $db->query("SELECT COUNT(user_id) AS 'dislikes' FROM Likes WHERE post_id = $postId AND up_down = -1");
+    $dislikes = $dislikeResult->fetch(PDO::FETCH_ASSOC)['dislikes'];
+
+    $LikesSum = $likes - $dislikes;
+
+    $response->likes = $LikesSum;
     $response->post_likes = $LikesSum;
     $response->addedlikeCount = -1;
     $response->message = 'You have unliked this post';
@@ -55,6 +66,17 @@ if (isset($getLikes_result['id']) && $getLikes_result['up_down'] === '1') {
     $stmt->execute();
 
     //Send response to frontned
+    //Fetch likes on post
+    $likesResult = $db->query("SELECT COUNT(user_id) AS 'likes' FROM Likes WHERE post_id = $postId AND up_down = 1");
+    $likes = $likesResult->fetch(PDO::FETCH_ASSOC)['likes'];
+
+    //Fetch dislikes
+    $dislikeResult = $db->query("SELECT COUNT(user_id) AS 'dislikes' FROM Likes WHERE post_id = $postId AND up_down = -1");
+    $dislikes = $dislikeResult->fetch(PDO::FETCH_ASSOC)['dislikes'];
+
+    $LikesSum = $likes - $dislikes;
+
+    $response->likes = $LikesSum;
     $response->post_likes = $LikesSum;
     $response->addedlikeCount = 1;
     $response->message = 'You liked the post';
@@ -63,7 +85,7 @@ if (isset($getLikes_result['id']) && $getLikes_result['up_down'] === '1') {
     die();
     //No like or dislike on post
 }
-if (isset($getLikes_result['id']) && $getLikes_result['up_down'] === '0') {
+if (isset($getLikes_result['id']) && $getLikes_result['up_down'] === '-1') {
     //remove previous dislike
     $db->query("DELETE FROM Likes WHERE user_id = $user_id AND post_id = $postId;");
 
@@ -75,6 +97,18 @@ if (isset($getLikes_result['id']) && $getLikes_result['up_down'] === '0') {
     $stmt->bindParam(':up_down', $like);
     $stmt->execute();
 
+    //Send to frontend
+    //Fetch likes on post
+    $likesResult = $db->query("SELECT COUNT(user_id) AS 'likes' FROM Likes WHERE post_id = $postId AND up_down = 1");
+    $likes = $likesResult->fetch(PDO::FETCH_ASSOC)['likes'];
+
+    //Fetch dislikes
+    $dislikeResult = $db->query("SELECT COUNT(user_id) AS 'dislikes' FROM Likes WHERE post_id = $postId AND up_down = -1");
+    $dislikes = $dislikeResult->fetch(PDO::FETCH_ASSOC)['dislikes'];
+
+    $LikesSum = $likes - $dislikes;
+
+    $response->likes = $LikesSum;
     $response->post_likes = $LikesSum;
     $response->addedlikeCount = 2;
     $response->message = 'You liked the post and the unlike is removed';

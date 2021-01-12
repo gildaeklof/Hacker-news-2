@@ -27,7 +27,6 @@
 .post {
     background: var(--post-background-color);
     backdrop-filter: blur(var(--backdrop-blur));
-    height: 30rem;
     max-width: 100%;
     display: flex;
     flex-direction: column;
@@ -218,7 +217,7 @@ width: 70%;
     outline: none;
 }
 
-.bottom-section .right .edit-button {
+.bottom-section .right .edit-button, .post-edit-button {
     border-radius: 5rem;
     background-color: rgb(0, 132, 255);
     appearance: none;
@@ -227,7 +226,7 @@ width: 70%;
     padding: .3rem .6rem;
 }
 
-.bottom-section .right .delete-button {
+.bottom-section .right .delete-button, .post-delete-button {
     border-radius: 5rem;
     background-color: rgb(255, 0, 0);
     appearance: none;

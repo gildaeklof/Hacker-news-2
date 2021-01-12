@@ -1,4 +1,4 @@
-const commentButtons = document.querySelectorAll('.post .bottom-section button')
+const commentButtons = document.querySelectorAll('.post-coment-button')
 console.log(commentButtons)
 
 const submitComment = (e) => {
@@ -56,5 +56,32 @@ commentButtons.forEach((button) => {
 })
 
 //Delete comment 
-DocumentTimeline
+
+const deleteComment = (e) => {
+    const button = e.target;
+    const commentId = e.target.parentElement.parentElement.parentElement.dataset.id
+    const comment = e.target.parentElement.parentElement.parentElement
+    const value = button.previousSibling.value
+    const postId = comment.dataset.postid
+
+    //Send data to backend 
+    const JSONBody = {
+        commentId: commentId
+    }
+
+    window.fetch('../Account/delete_comment.php', {
+        body: JSON.stringify(JSONBody),
+        method: 'post',
+        credentials: 'include'
+    }).then(response => response.text())
+        .then(text => {
+            location.reload();
+        })
+
+}
+
+document.querySelectorAll('.delete-button').forEach((button) => {
+    button.addEventListener('click', deleteComment)
+})
+
 

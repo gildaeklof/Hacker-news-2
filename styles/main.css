@@ -6,3 +6,8 @@ body {
     background: url(/images/Scattered-Forcefields.svg);
     background-attachment: fixed;
 }
+
+.hidden {
+    visibility: hidden;
+    position: absolute;
+}

@@ -37,7 +37,7 @@ $result;
 if ($sort_by === 'new') {
     $result = $db->query("SELECT * FROM Posts ORDER BY \"date\" DESC");
 } else if ($sort_by === 'mostupvoted') {
-    $result = $db->query("SELECT id, user_id, header, body, date, ifnull((select sum(up_down) from likes where posts.id=likes.post_id), 0) AS antallikes FROM Posts ORDER BY antallikes DESC");
+    $result = $db->query("SELECT id, user_id, header, body, date, link, ifnull((select sum(up_down) from likes where posts.id=likes.post_id), 0) AS antallikes FROM Posts ORDER BY antallikes DESC");
 }
 
 $posts = $result->fetchAll(PDO::FETCH_ASSOC);
@@ -62,6 +62,8 @@ $posts = $result->fetchAll(PDO::FETCH_ASSOC);
         <?php
         $postId = $post['id'];
 
+
+
         //Fetch all comments on post
         $commentResult = $db->query("SELECT * FROM Comments WHERE post_id = $postId");
         $comments = $commentResult->fetchAll(PDO::FETCH_ASSOC);
@@ -80,6 +82,7 @@ $posts = $result->fetchAll(PDO::FETCH_ASSOC);
         $userId = $post['user_id'];
         $result = $db->query("SELECT * FROM Users WHERE id = $userId");
         $user = $result->fetch(PDO::FETCH_ASSOC);
+        isset($user['avatar_path']) ? $avatarPath = $user['avatar_path'] : $avatarPath = '/Account/uploads/default.svg';
 
         //If user has a name, set it to $userName
         if (isset($user['name'])) {
@@ -98,21 +101,24 @@ $posts = $result->fetchAll(PDO::FETCH_ASSOC);
         <div data-postId="<?= $postId ?>" class="post id<?= $postId ?> post-group<?= $postId ?>">
             <div class="date-section">
                 <div class="left">
-                    <img src="/images/photo-1609050470947-f35aa6071497.jpeg" alt="">
+                    <img src=<?= $avatarPath ?> alt="">
                     <p class="name"><?= $userName ?></p>
                 </div>
                 <div class="right">
                     <p class="date"><?= date('D M Y H:i', $post['date']) ?></p>
                 </div>
             </div>
-            <div class="image-section">
-                <img src="/images/photo-1609050470947-f35aa6071497.jpeg" alt="">
-            </div>
+            <a href="<?= $post['link'] ?>">
+                <div class="image-section">
+                    <img src="/images/photo-1609050470947-f35aa6071497.jpeg" alt="">
+                </div>
+            </a>
             <div class="text-section">
                 <div class="text-section-text">
                     <h2><?= $post['header'] ?></h2>
                     <p><?= $post['body'] ?></p>
                 </div>
+
                 <div class="text-section-vote" data-post="<?= $post['id'] ?>">
                     <div class="img-container">
                         <img class="upvote" src="/assets/up-arrow.svg" alt="">
@@ -125,12 +131,12 @@ $posts = $result->fetchAll(PDO::FETCH_ASSOC);
             </div>
             <div class="bottom-section">
                 <div class="left">
-                    <button>comment</button>
+                    <button class="post-coment-button">comment</button>
                 </div>
                 <?php if (isset($_SESSION['user']) && $post['user_id'] === $_SESSION['user']['id']) : ?>
                     <div class="right">
-                        <button class="edit-button">Edit</button>
-                        <button class="delete-button">Delete</button>
+                        <button class="post-edit-button">Edit</button>
+                        <button class="post-delete-button">Delete</button>
                     </div>
                 <?php endif ?>
             </div>
@@ -148,6 +154,8 @@ $posts = $result->fetchAll(PDO::FETCH_ASSOC);
             $commenterId = $comment['user_id'];
             $result = $db->query("SELECT * FROM Users WHERE id = $commenterId");
             $commenter = $result->fetch(PDO::FETCH_ASSOC);
+            $commentImageURL = $commenter['avatar_path'];
+            isset($commenter['avatar_path']) ? $commentImageURL = $commenter['avatar_path'] : $commentImageURL = '/Account/uploads/default.svg';
 
             //If user has a name, set it to $userName
             if (isset($commenter['name'])) {
@@ -159,7 +167,7 @@ $posts = $result->fetchAll(PDO::FETCH_ASSOC);
             <div data-postId="<?= $postId ?>" data-id="<?= $commentId ?>" class="comment post<?= $postId ?> post-group<?= $postId ?> comment-id<?= $commentId ?>">
                 <div class="upper">
                     <div class="left">
-                        <img src="/images/photo-1609050470947-f35aa6071497.jpeg" alt="">
+                        <img src=<?= $commentImageURL ?> alt="">
                         <p class="name"><?= $commenter_name ?></p>
                     </div>
                     <div class="right">
@@ -181,7 +189,9 @@ $posts = $result->fetchAll(PDO::FETCH_ASSOC);
         <?php endforeach ?>
     <?php endforeach ?>
     <script src="/script/like.js"></script>
+    <script src="/script/delete_post.js"></script>
     <script src="/script/edit-comment.js"></script>
+    <script src="/script/edit_post.js"></script>
     <script src="/script/scroll.js"></script>
     <script src="/script/comment.js"></script>
     <script src="/script/sort.js"></script>

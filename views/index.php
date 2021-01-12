@@ -52,10 +52,10 @@ $posts = $result->fetchAll(PDO::FETCH_ASSOC);
     <select class="sort-by" name="sort" id="">
         <option <?php if ($sort_by === 'new') {
                     echo 'selected';
-                } ?>value="new">New</option>
+                } ?>value="new">New 💎</option>
         <option <?php if ($sort_by === 'mostupvoted') {
                     echo 'selected';
-                } ?> value="mostupvoted">Most upvoted</option>
+                } ?> value="mostupvoted">Likes 💯</option>
     </select>
 
     <?php foreach ($posts as $post) : ?>

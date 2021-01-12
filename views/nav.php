@@ -1,4 +1,7 @@
 <nav>
+    <div class="logo">
+        <a href="/views/index.php"><img class="logo" src="/images/logo.svg" alt="Logotype 'speed feed'"></a>
+    </div>
     <div class="hamburger-icon hamburger center-contain"></div>
     <div class="hamburger-menu hamburger">
         <div class="hamburger_text_container">

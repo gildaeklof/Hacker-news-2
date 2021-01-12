@@ -7,7 +7,9 @@ sortBy.addEventListener('change', (e) => {
         body: sortBy.value
     })
         .then(response => response.text())
-        .then(data => console.log(data))
+        .then(data => {
+            location.reload();
+        })
     //Todo: reload page
-    location.reload();
+
 })

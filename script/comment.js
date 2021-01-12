@@ -1,5 +1,4 @@
 const commentButtons = document.querySelectorAll('.post-coment-button')
-console.log(commentButtons)
 
 const submitComment = (e) => {
     const postId = e.target.parentElement.parentElement.parentElement.dataset.id

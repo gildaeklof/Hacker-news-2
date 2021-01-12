@@ -95,7 +95,7 @@ $posts = $result->fetchAll(PDO::FETCH_ASSOC);
 
 
 
-        <div data-postId="<?= $postId ?>" class="post id<?= $postId ?>">
+        <div data-postId="<?= $postId ?>" class="post id<?= $postId ?> post-group<?= $postId ?>">
             <div class="date-section">
                 <div class="left">
                     <img src="/images/photo-1609050470947-f35aa6071497.jpeg" alt="">
@@ -156,7 +156,7 @@ $posts = $result->fetchAll(PDO::FETCH_ASSOC);
                 $commenter_name = 'IHaveNoName';
             }
             ?>
-            <div data-postId="<?= $postId ?>" data-id="<?= $commentId ?>" class="comment post<?= $postId ?> comment-id<?= $commentId ?>">
+            <div data-postId="<?= $postId ?>" data-id="<?= $commentId ?>" class="comment post<?= $postId ?> post-group<?= $postId ?> comment-id<?= $commentId ?>">
                 <div class="upper">
                     <div class="left">
                         <img src="/images/photo-1609050470947-f35aa6071497.jpeg" alt="">

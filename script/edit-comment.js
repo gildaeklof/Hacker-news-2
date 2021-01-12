@@ -35,15 +35,16 @@ const sendComment = (e) => {
     const JSONBody = {
         postId: postId,
         body: value,
+        commentId: commentId
     }
 
     window.fetch('../Account/edit-comment.php', {
         body: JSON.stringify(JSONBody),
-        method: 'post'
+        method: 'post',
+        credentials: 'include'
     }).then(response => response.text())
         .then(text => {
-            console.log(text);
-            // location.reload();
+            location.reload();
         })
 
 }

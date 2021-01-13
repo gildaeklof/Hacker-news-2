@@ -18,5 +18,3 @@ const toggleHamburger = () => {
 
 hamburgerIcon.addEventListener('click', toggleHamburger)
 
-
-

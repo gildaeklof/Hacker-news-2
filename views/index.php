@@ -35,9 +35,9 @@ if (isset($_SESSION['user'])) {
 
 $result;
 if ($sort_by === 'new') {
-    $result = $db->query("SELECT * FROM Posts ORDER BY \"date\" DESC");
+    $result = $db->query("SELECT * FROM Posts ORDER BY \"date\" DESC LIMIT 30");
 } else if ($sort_by === 'mostupvoted') {
-    $result = $db->query("SELECT id, user_id, header, body, date, link, ifnull((select sum(up_down) from likes where posts.id=likes.post_id), 0) AS antallikes FROM Posts ORDER BY antallikes DESC");
+    $result = $db->query("SELECT id, user_id, header, body, date, link, ifnull((select sum(up_down) from likes where posts.id=likes.post_id), 0) AS antallikes FROM Posts ORDER BY antallikes DESC LIMIT 30");
 }
 
 $posts = $result->fetchAll(PDO::FETCH_ASSOC);

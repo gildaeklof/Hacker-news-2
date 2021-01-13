@@ -62,25 +62,31 @@ $posts = $result->fetchAll(PDO::FETCH_ASSOC);
         <?php
         $postId = $post['id'];
 
-        $hasLikedResult = $db->query("SELECT * FROM Likes WHERE post_id = $postId AND user_id = $userId AND up_down = 1");
-        $hasLikedData = $hasLikedResult->fetch(PDO::FETCH_ASSOC);
-        if (isset($hasLikedData['id'])) {
-            $hasLiked = true;
-            $upvoteImage = '/images/upvoteActive.svg';
-        } else {
-            $hasLiked = false;
-            $upvoteImage = '/images/upvote.svg';
+        $upvoteImage = '/images/upvote.svg';
+        $downvoteImage = '/images/downvote.svg';
+
+        if (isset($_SESSION['user'])) {
+            $hasLikedResult = $db->query("SELECT * FROM Likes WHERE post_id = $postId AND user_id = $userId AND up_down = 1");
+            $hasLikedData = $hasLikedResult->fetch(PDO::FETCH_ASSOC);
+            if (isset($hasLikedData['id'])) {
+                $hasLiked = true;
+                $upvoteImage = '/images/upvoteActive.svg';
+            } else {
+                $hasLiked = false;
+                $upvoteImage = '/images/upvote.svg';
+            }
+
+            $hasDislikedResult = $db->query("SELECT id FROM Likes WHERE post_id = $postId AND user_id = $userId AND up_down = -1");
+            $hasDislikedData = $hasDislikedResult->fetch(PDO::FETCH_ASSOC);
+            if (isset($hasDislikedData['id'])) {
+                $hasDisliked = true;
+                $downvoteImage = '/images/downvoteActive.svg';
+            } else {
+                $hasDisliked = false;
+                $downvoteImage = '/images/downvote.svg';
+            }
         }
 
-        $hasDislikedResult = $db->query("SELECT id FROM Likes WHERE post_id = $postId AND user_id = $userId AND up_down = -1");
-        $hasDislikedData = $hasDislikedResult->fetch(PDO::FETCH_ASSOC);
-        if (isset($hasDislikedData['id'])) {
-            $hasDisliked = true;
-            $downvoteImage = '/images/downvoteActive.svg';
-        } else {
-            $hasDisliked = false;
-            $downvoteImage = '/images/downvote.svg';
-        }
 
 
         //Fetch all comments on post
@@ -102,7 +108,7 @@ $posts = $result->fetchAll(PDO::FETCH_ASSOC);
 
         //Fetch user from database
         $postUserId = $post['user_id'];
-        $result = $db->query("SELECT * FROM Users WHERE id = $userId");
+        $result = $db->query("SELECT * FROM Users WHERE id = $postUserId");
         $user = $result->fetch(PDO::FETCH_ASSOC);
         isset($user['avatar_path']) ? $avatarPath = $user['avatar_path'] : $avatarPath = '/Account/uploads/default.svg';
 

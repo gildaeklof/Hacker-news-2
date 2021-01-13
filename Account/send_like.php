@@ -31,6 +31,7 @@ if (!isset($_SESSION['user'])) {
     $LikesSum = $likes - $dislikes;
 
     $response->post_likes = $LikesSum;
+    $response->loggedIn = false;
     $response->likes = $LikesSum;
     $response->message = 'Log in to vote';
     $JSON_response = json_encode($response);

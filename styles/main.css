@@ -5,6 +5,12 @@ body {
     /*🏞🔥 Background by SVGBackgrounds.com 🔥🏞 */
     background: url(/images/Scattered-Forcefields.svg);
     background-attachment: fixed;
+    animation: fadein 1s both;
+}
+
+@keyframes fadein {
+    from{opacity: 0;}
+    to{opacity: 1;}
 }
 
 .hidden {
@@ -22,5 +28,4 @@ body {
     width: 16rem;
     padding-left: .5rem;
     font-weight: 1rem;
-
 }

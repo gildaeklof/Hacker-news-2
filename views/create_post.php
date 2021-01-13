@@ -1,7 +1,7 @@
 <?php
+require('../functions.php');
 require('header.php');
 require('./nav.php');
-require('../functions.php');
 logMessage();
 
 if (isset($_SESSION['user']['name'])) {

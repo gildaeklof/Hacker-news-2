@@ -1,8 +1,8 @@
 <?php
 
+require('../functions.php');
 require('header.php');
 require('./nav.php');
-require('../functions.php');
 $userId = $_SESSION['user']['id'];
 logMessage();
 
@@ -30,16 +30,16 @@ if (!$_SESSION['user']) {
         <form action="/Account/update_user.php" method="post" enctype="multipart/form-data">
 
             <label for="file">Image</label>
-            <input type="file" name="file" id="file">
+            <input class="input-field img-button" type="file" name="file" id="file">
             <label for="email">Email</label>
-            <input placeholder="<?php echo $_SESSION['user']['email'] ?>" type="text" name="email" id="email">
+            <input class="input-field" value="<?php echo $_SESSION['user']['email'] ?>" type="text" name="email" id="email">
             <label for="name">Name</label>
-            <input placeholder="<?php echo $_SESSION['user']['name'] ?>" type="text" name="name" id="name">
+            <input class="input-field" value="<?php echo $_SESSION['user']['name'] ?>" type="text" name="name" id="name">
             <label for="password">Password</label>
-            <input placeholder="***********" type="text" name="password" id="password">
+            <input class="input-field" value="***********" type="text" name="password" id="password">
             <label for="bio">Bio</label>
-            <input placeholder="<?php echo $_SESSION['user']['bio'] ?>" type="text" name="bio" id="bio">
-            <input type="submit" value="Save">
+            <input class="input-field" value="<?php echo $_SESSION['user']['bio'] ?>" type="text" name="bio" id="bio">
+            <input class="save" type="submit" value="Save">
         </form>
     </section>
     <script src="../script/hamburger.js"></script>

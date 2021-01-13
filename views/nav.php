@@ -14,9 +14,12 @@
             <a href="/views/create_post.php">
                 <h1>Create post</h1>
             </a>
-            <a href="/views/account.php">
-                <h1>Account</h1>
-            </a>
+            <?php
+            if (isset($_SESSION['user'])) : ?>
+                <a href="/views/account.php">
+                    <h1>Account</h1>
+                </a>
+            <?php endif ?>
             <?php
             if (isset($_SESSION['user'])) : ?>
                 <a href="/Account/logout.php">

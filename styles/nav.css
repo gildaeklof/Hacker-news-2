@@ -2,7 +2,7 @@
 .hamburger {
     position: absolute;
     top: 1rem;
-    right: 1rem;
+    right: .5rem;
     height: 2rem;
     width: 2rem;
 }
@@ -73,9 +73,10 @@ a {
 /* Logo */
 .logo {
     position: absolute;
-    top: .25rem;
-    left: .25rem;
+    top: .5rem;
+    left: .5rem;
     width: 7rem;
+
 }
 
 .sort-by {
@@ -88,7 +89,6 @@ a {
     border: none;
     padding: .2rem .4rem;
     box-shadow: 0px 0px 51px -17px rgba(0,133,255,1);
-    
 }
 
 

@@ -11,3 +11,16 @@ body {
     visibility: hidden;
     position: absolute;
 }
+
+.input-field {
+    background: #F4F4F4;
+    color: rgb(73, 73, 73);
+    border: none;
+    border-radius: .6rem;
+    outline: none;
+    height: 3rem;
+    width: 16rem;
+    padding-left: .5rem;
+    font-weight: 1rem;
+
+}

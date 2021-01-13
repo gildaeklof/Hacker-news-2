@@ -9,4 +9,5 @@
     <link rel="stylesheet" href="/styles/posts.css">
     <link rel="stylesheet" href="/styles/main.css">
     <link rel="stylesheet" href="/styles/nav.css">
+    <link rel="stylesheet" href="/styles/account.css">
 </head>

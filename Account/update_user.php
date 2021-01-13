@@ -4,8 +4,6 @@ declare(strict_types=1);
 require('../functions.php');
 $user_id = $_SESSION['user']['id'];
 
-
-
 // Other
 $name = $_POST['name'];
 $email = $_POST['email'];
@@ -35,7 +33,7 @@ if (isset($_FILES['file'])) {
     $file_destination = __DIR__ . '/uploads/' . $file_name_new;
     $file_relative_path = '/Account/uploads/' . $file_name_new;
 
-    if ($file_size < 100000) {
+    if ($file_size < 300000) {
         move_uploaded_file($file_tmp, $file_destination);
     } else {
         createMessage(2, 'Image is too large :C make smol');

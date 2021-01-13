@@ -16,6 +16,18 @@ const sendLike = (post_id) => {
         likeIndicator = document.querySelector(`.post.id${post_id} .text-section .text-section-vote p`)
 
         likeIndicator.innerText = data.likes;
+
+        document.querySelector(`.id${post_id} .text-section .text-section-vote .upvote-section img`).classList.toggle('upvoteInactive')
+        document.querySelector(`.id${post_id} .text-section .text-section-vote .upvote-section img`).classList.toggle('upvote-active')
+
+        if (document.querySelector(`.id${post_id} .text-section .text-section-vote .upvote-section img`).classList.contains('upvoteInactive')) {
+            document.querySelector(`.id${post_id} .text-section .text-section-vote .upvote-section img`).src = "/images/upvote.svg"
+        } else if (document.querySelector(`.id${post_id} .text-section .text-section-vote .upvote-section img`).classList.contains('upvote-active')) {
+            document.querySelector(`.id${post_id} .text-section .text-section-vote .upvote-section img`).src = "/images/upvoteActive.svg"
+            document.querySelector(`.id${post_id} .text-section .text-section-vote .downvote-section img`).src = "/images/downvote.svg"
+            document.querySelector(`.id${post_id} .text-section .text-section-vote .downvote-section img`).classList.add('downvoteInactive')
+            document.querySelector(`.id${post_id} .text-section .text-section-vote .downvote-section img`).classList.remove('downvote-active')
+        }
         //if data === true 
         //increase like count
     })
@@ -51,6 +63,20 @@ const sendDislike = (post_id) => {
         likeIndicator.innerText = data.likes;
         //if data === true 
         //increase like count
+
+        dislikeButton = document.querySelector(`.id${post_id} .text-section .text-section-vote .downvote-section img`)
+
+        document.querySelector(`.id${post_id} .text-section .text-section-vote .downvote-section img`).classList.toggle('downvoteInactive')
+        document.querySelector(`.id${post_id} .text-section .text-section-vote .downvote-section img`).classList.toggle('downvote-active')
+
+        if (document.querySelector(`.id${post_id} .text-section .text-section-vote .downvote-section img`).classList.contains('downvoteInactive')) {
+            document.querySelector(`.id${post_id} .text-section .text-section-vote .downvote-section img`).src = "/images/downvote.svg"
+        } else if (document.querySelector(`.id${post_id} .text-section .text-section-vote .downvote-section img`).classList.contains('downvote-active')) {
+            document.querySelector(`.id${post_id} .text-section .text-section-vote .downvote-section img`).src = "/images/downvoteActive.svg"
+            document.querySelector(`.id${post_id} .text-section .text-section-vote .upvote-section img`).src = "/images/upvote.svg"
+            document.querySelector(`.id${post_id} .text-section .text-section-vote .upvote-section img`).classList.add('upvoteInactive')
+            document.querySelector(`.id${post_id} .text-section .text-section-vote .upvote-section img`).classList.remove('upvote-active')
+        }
     })
 
 }

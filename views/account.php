@@ -36,7 +36,7 @@ if (!$_SESSION['user']) {
             <label for="name">Name</label>
             <input class="input-field" value="<?php echo $_SESSION['user']['name'] ?>" type="text" name="name" id="name">
             <label for="password">Password</label>
-            <input class="input-field" value="***********" type="text" name="password" id="password">
+            <input class="input-field" placeholder="***********" type="text" name="password" id="password">
             <label for="bio">Bio</label>
             <input class="input-field" value="<?php echo $_SESSION['user']['bio'] ?>" type="text" name="bio" id="bio">
             <input class="save" type="submit" value="Save">

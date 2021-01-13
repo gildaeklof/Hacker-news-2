@@ -182,6 +182,26 @@ width: 70%;
     width: auto;
 }
 
+.upvoteInactive {
+    height: 60%;
+    width: auto;
+}
+
+.downvoteInactive {
+    height: 60%;
+    width: auto;
+}
+
+.upvote-active {
+    height: 60%;
+    width: auto;
+}
+
+.downvote-active {
+    height: 60%;
+    width: auto;
+}
+
 
 
 
@@ -337,3 +357,5 @@ width: 70%;
     background: none;
     border: none;
 }
+
+

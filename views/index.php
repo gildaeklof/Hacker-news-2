@@ -62,6 +62,25 @@ $posts = $result->fetchAll(PDO::FETCH_ASSOC);
         <?php
         $postId = $post['id'];
 
+        $hasLikedResult = $db->query("SELECT * FROM Likes WHERE post_id = $postId AND user_id = $userId AND up_down = 1");
+        $hasLikedData = $hasLikedResult->fetch(PDO::FETCH_ASSOC);
+        if (isset($hasLikedData['id'])) {
+            $hasLiked = true;
+            $upvoteImage = '/images/upvoteActive.svg';
+        } else {
+            $hasLiked = false;
+            $upvoteImage = '/images/upvote.svg';
+        }
+
+        $hasDislikedResult = $db->query("SELECT id FROM Likes WHERE post_id = $postId AND user_id = $userId AND up_down = -1");
+        $hasDislikedData = $hasDislikedResult->fetch(PDO::FETCH_ASSOC);
+        if (isset($hasDislikedData['id'])) {
+            $hasDisliked = true;
+            $downvoteImage = '/images/downvoteActive.svg';
+        } else {
+            $hasDisliked = false;
+            $downvoteImage = '/images/downvote.svg';
+        }
 
 
         //Fetch all comments on post
@@ -72,6 +91,9 @@ $posts = $result->fetchAll(PDO::FETCH_ASSOC);
         $likesResult = $db->query("SELECT COUNT(user_id) AS 'likes' FROM Likes WHERE post_id = $postId AND up_down = 1");
         $likes = $likesResult->fetch(PDO::FETCH_ASSOC)['likes'];
 
+
+
+
         //Fetch dislikes
         $dislikeResult = $db->query("SELECT COUNT(user_id) AS 'dislikes' FROM Likes WHERE post_id = $postId AND up_down = -1");
         $dislikes = $dislikeResult->fetch(PDO::FETCH_ASSOC)['dislikes'];
@@ -79,7 +101,7 @@ $posts = $result->fetchAll(PDO::FETCH_ASSOC);
         $LikesSum = $likes - $dislikes;
 
         //Fetch user from database
-        $userId = $post['user_id'];
+        $postUserId = $post['user_id'];
         $result = $db->query("SELECT * FROM Users WHERE id = $userId");
         $user = $result->fetch(PDO::FETCH_ASSOC);
         isset($user['avatar_path']) ? $avatarPath = $user['avatar_path'] : $avatarPath = '/Account/uploads/default.svg';
@@ -90,6 +112,9 @@ $posts = $result->fetchAll(PDO::FETCH_ASSOC);
         } else {
             $userName = 'IHaveNoName';
         }
+
+
+
 
         ?>
 
@@ -120,12 +145,12 @@ $posts = $result->fetchAll(PDO::FETCH_ASSOC);
                 </div>
 
                 <div class="text-section-vote" data-post="<?= $post['id'] ?>">
-                    <div class="img-container">
-                        <img class="upvote" src="/assets/up-arrow.svg" alt="">
+                    <div class="upvote-section img-container">
+                        <img class="upvote <?= $hasLiked ? 'upvote-active' : 'upvoteInactive' ?>" src="<?= $upvoteImage ?>" alt="">
                     </div>
                     <p><?= $LikesSum ?></p>
-                    <div class="img-container">
-                        <img class="downvote" src="/assets/down-arrow.svg" alt="">
+                    <div class="downvote-section img-container">
+                        <img class="downvote <?= $hasDisliked ? 'downvote-active' : 'downvoteInactive' ?>" src="<?= $downvoteImage ?>" alt="">
                     </div>
                 </div>
             </div>

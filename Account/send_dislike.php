@@ -20,10 +20,22 @@ $LikesSum = $likes - $dislikes;
 
 //If user is not logged in, die
 if (!isset($_SESSION['user'])) {
+    //Send response to frontned
+    //Fetch likes on post
+    $likesResult = $db->query("SELECT COUNT(user_id) AS 'likes' FROM Likes WHERE post_id = $postId AND up_down = 1");
+    $likes = $likesResult->fetch(PDO::FETCH_ASSOC)['likes'];
+
+    //Fetch dislikes
+    $dislikeResult = $db->query("SELECT COUNT(user_id) AS 'dislikes' FROM Likes WHERE post_id = $postId AND up_down = -1");
+    $dislikes = $dislikeResult->fetch(PDO::FETCH_ASSOC)['dislikes'];
+
+    $LikesSum = $likes - $dislikes;
+
     $response->post_likes = $LikesSum;
-    $response->addedlikeCount = 0;
+    $response->likes = $LikesSum;
     $response->message = 'Log in to vote';
     $JSON_response = json_encode($response);
+
     echo $JSON_response;
     die();
 }

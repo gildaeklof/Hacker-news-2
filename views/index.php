@@ -217,7 +217,7 @@ $posts = $result->fetchAll(PDO::FETCH_ASSOC);
                         <span class="vote-number" data-id="<?= $commentId; ?>"><?= getUpvotes($db, $commentId) ?></span>
                         <?php if (isset($_SESSION['user'])) : ?>
                             <form class="like-comment-form" action="/Account/like-comment.php" method="post">
-                                <input type="hidden" name="like-comment" id="comment-id" value="<?= $commentId; ?>"></input>
+                                <input type="hidden" name="like-comment" value="<?= $commentId; ?>"></input>
                                 <?php if (!existUpvote($db, $commentId, $_SESSION['user']['id'])) : ?>
                                     <button style="background-color: black;" value="submit" type="submit" class="like-comment-button" data-id="<?= $commentId; ?>"></button>
                                 <?php else : ?>

@@ -26,5 +26,10 @@ $statement = $db->prepare($query);
 $statement->bindParam(':id', $user_id, PDO::PARAM_INT);
 $statement->execute();
 
+$query = 'DELETE FROM comment_likes WHERE user_id = :id';
+$statement = $db->prepare($query);
+$statement->bindParam(':id', $user_id, PDO::PARAM_INT);
+$statement->execute();
+
 session_destroy();
 redirect('/views/index.php');

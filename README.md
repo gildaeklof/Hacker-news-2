@@ -17,3 +17,5 @@
 
 - As a user I'm able to delete my account along with all posts, upvotes and comments.
 - As a user I'm able to upvote and remove upvote on comments.
+
+Link to [pull request](https://github.com/Hugocsundberg/Hacker-news/pull/2).
